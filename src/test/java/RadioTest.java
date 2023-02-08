@@ -2,62 +2,47 @@ import org.junit.jupiter.api.Assertions;
 import Radio.Radio;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
 
 public class RadioTest {
 
     @ParameterizedTest
-    @CsvSource({
-            "9,0",
-            "4,5",
-            "0,1"
-    })
-//    @CsvFileSource(files = "src/test/resources/maxFrequencyTest.csv")
-    public void maxFrequency(int Frequency, int expected) {
+    @CsvFileSource(files = "src/test/resources/maxFrequencyTest.csv")
+    public void maxFrequency(int frequency, int expected) {
         Radio max = new Radio();
-        max.setNext(Frequency);
+        max.setDirectAccessToFrequency(frequency);
+        max.setNextFrequency();
 
         int actual = max.getCurrentFrequency();
         Assertions.assertEquals(expected, actual);
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "0,9",
-            "4,3",
-            "9,8"
-    })
-    public void minFrequency(int Frequency, int expected) {
+    @CsvFileSource(files = "src/test/resources/minFrequencyTest.csv")
+    public void minFrequency(int frequency, int expected) {
         Radio min = new Radio();
-        min.setPrev(Frequency);
+        min.setDirectAccessToFrequency(frequency);
+        min.setPrevFrequency();
 
         int actual = min.getCurrentFrequency();
         Assertions.assertEquals(expected, actual);
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "-1,0",
-            "4,4",
-            "10,0"
-    })
-    public void directFrequency(int Frequency, int expected) {
+    @CsvFileSource(files = "src/test/resources/directFrequencyTest.csv")
+    public void directFrequency(int frequency, int expected) {
         Radio direct = new Radio();
-        direct.setDirectAccessToFrequency(Frequency);
+        direct.setDirectAccessToFrequency(frequency);
 
         int actual = direct.getCurrentFrequency();
         Assertions.assertEquals(expected, actual);
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "0,1",
-            "4,5",
-            "10,10"
-    })
-    public void increaseVolume(int Volume, int expected) {
+    @CsvFileSource(files = "src/test/resources/increaseVolume.csv")
+    public void increaseVolume(int volume, int expected) {
         Radio increase = new Radio();
-        increase.increaseVolume(Volume);
+        increase.setCurrentVolume(volume);
+        increase.increaseVolume();
 
         int actual = increase.getCurrentVolume();
         Assertions.assertEquals(expected, actual);
@@ -65,14 +50,11 @@ public class RadioTest {
     }
 
     @ParameterizedTest
-    @CsvSource({
-            "0,0",
-            "4,3",
-            "10,9"
-    })
+    @CsvFileSource(files = "src/test/resources/decreaseVolume.csv")
     public void decreaseVolume(int Volume, int expected) {
         Radio increase = new Radio();
-        increase.decreaseVolume(Volume);
+        increase.setCurrentVolume(Volume);
+        increase.decreaseVolume();
 
         int actual = increase.getCurrentVolume();
         Assertions.assertEquals(expected, actual);

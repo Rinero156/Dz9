@@ -2,7 +2,7 @@ package Radio;
 
 public class Radio {
     private int currentFrequency;
-    private int currentVolume;
+    public int currentVolume;
 
     public int getCurrentFrequency() {
         return currentFrequency;
@@ -12,41 +12,49 @@ public class Radio {
         return currentVolume;
     }
 
-    public int setNext(int newCurretnFrequency) {
-        if (newCurretnFrequency >= 9) {
-            return currentFrequency = 0;
+    public void setCurrentVolume(int newCurrentVolume) {
+        if (newCurrentVolume <= 0) {
+            newCurrentVolume = 0;
         }
-        return currentFrequency = newCurretnFrequency + 1;
-    }
-
-    public int setPrev(int newCurretnFrequency) {
-        if (newCurretnFrequency <= 0) {
-            return currentFrequency = 9;
+        if (newCurrentVolume >= 10) {
+            newCurrentVolume = 10;
         }
-        return currentFrequency = newCurretnFrequency - 1;
+        currentVolume = newCurrentVolume;
     }
 
     public void setDirectAccessToFrequency(int newCurretnFrequency) {
         if (newCurretnFrequency < 0) {
-            return;
+            newCurretnFrequency = 0;
         }
         if (newCurretnFrequency > 9) {
-            return;
+            newCurretnFrequency = 9;
         }
         currentFrequency = newCurretnFrequency;
     }
 
-    public int increaseVolume(int newCurrentVolume) {
-        if (newCurrentVolume == 10) {
-            return currentVolume = 10;
+    public void setNextFrequency() {
+        if (currentFrequency == 9) {
+            currentFrequency = -1;
         }
-        return currentVolume = newCurrentVolume + 1;
+        currentFrequency = currentFrequency + 1;
     }
 
-    public int decreaseVolume(int newCurrentVolume) {
-        if (newCurrentVolume == 0) {
-            return currentVolume = 0;
+    public void setPrevFrequency() {
+        if (currentFrequency == 0) {
+            currentFrequency = 10;
         }
-        return currentVolume = newCurrentVolume - 1;
+        currentFrequency = currentFrequency - 1;
+    }
+
+    public void increaseVolume() {
+        if (currentVolume > 0 && currentVolume < 10) {
+            currentVolume = currentVolume + 1;
+        }
+    }
+
+    public void decreaseVolume() {
+        if (currentVolume > 1 && currentVolume < 10) {
+            currentVolume = currentVolume - 1;
+        }
     }
 }
